@@ -7,15 +7,17 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
-steps:
-- script: dotnet test
-  displayName: Run unit tests
+jobs:
+- job: Test and build
+  steps:
+  - script: dotnet test
+    displayName: Run unit tests
 
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: Build application
+  - script: dotnet build --configuration $(buildConfiguration)
+    displayName: Build application
 
-- script: docker build -t my_image:v1.0 .
-  displayName: Build image
+  - script: docker build -t my_image:v1.0 .
+    displayName: Build image
 
-- script: docker push my-image:v1.0 .
-  displayName: Push image
+  - script: docker push my-image:v1.0 .
+    displayName: Push image
